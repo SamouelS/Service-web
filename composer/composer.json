@@ -1,0 +1,14 @@
+{
+    "name": "service/web",
+    "authors": [
+        {
+            "name": "SamouelS",
+            "email": "samuel.pacault@gmail.com"
+        }
+    ],
+
+    "require": {
+        "slim/slim": "^3.12"
+    }
+
+}
