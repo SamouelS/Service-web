@@ -18,3 +18,18 @@ $app->get('/[{table:patients|personnes|badges|infirmieres|visites}]', function (
     //var_dump($sqlRequest);
 });
 
+$app->get('/connect', function (Request $request, Response $response, array $args) {
+    
+    $sqlRequest = 'SELECT * FROM personne_login';
+    $retour = $this->db->query($sqlRequest); 
+    $json['status'] = false;
+    foreach ($retour as $row) {
+        if($row['login'] == $request->getParams()['login'] && $row['mp'] == md5($request->getParams()['mdp'])){
+            $json['status'] = true;
+        }
+    }
+   
+    $json = json_encode($json);
+    return $json;
+
+});
