@@ -18,6 +18,20 @@ $app->get('/{[table:patients|personnes|badges|infirmieres|visites}]', function (
     //var_dump($sqlRequest);
 });
 
+$app->get('[/{table:patient|personne|badge|infirmiere|visite}/{id:\d*}]', function (Request $request, Response $response, array $args) {
+    
+    $sqlRequest = 'SELECT * FROM '.$args['table'].' WHERE id='.$args['id'];
+    $retour = $this->db->query($sqlRequest);
+    $json= array();
+    foreach ($retour as $row) {
+        $json[] = json_encode($row);
+    }
+    $json = json_encode($json);
+    return $json;
+    var_dump($sqlRequest);
+
+});
+
 $app->get('/connect', function (Request $request, Response $response, array $args) {
     
     $sqlRequest = ' SELECT * 
@@ -39,16 +53,26 @@ $app->get('/connect', function (Request $request, Response $response, array $arg
 
 });
 
-$app->get('[/{table:patient|personne|badge|infirmiere|visite}/{id:\d*}]', function (Request $request, Response $response, array $args) {
-    
-    $sqlRequest = 'SELECT * FROM '.$args['table'].' WHERE id='.$args['id'];
-    $retour = $this->db->query($sqlRequest);
-    $json= array();
-    foreach ($retour as $row) {
-        $json[] = json_encode($row);
-    }
-    $json = json_encode($json);
-    return $json;
-    var_dump($sqlRequest);
+$app->post('/personne/patient', function (Request $request, Response $response, array $args) {
+    $params = $request->getBody();
+    $t = array('nom'=>'null', 'prenom'=>'null', 'sexe'=>'null', 'date_naiss'=>'null', 'date_deces'=>'null', 'ad1'=>'null', 'ad2'=>'null', 'cp'=>'null', 'ville'=>'null', 'tel_fixe'=>'null', 'tel_port'=>'null', 'mail'=>'null');
+    /*foreach($t as $key=>$value)
+    {
+        if(isset($params[$key]))
+        {
+            $t[$key]=$params[$key];
+
+        }
+    }*/
+
+    $sqlRequest =   'INSERT INTO personne (nom, prenom, sexe, date_naiss, date_deces, ad1, ad2, cp, ville, tel_fixe, tel_port, mail)
+                     VALUES ('. $t['nom'].','. $t['prenom'].','. $t['sexe'].','. $t['date_naiss'].','. $t['date_deces'].','. $t['ad1'].','. $t['ad2'].','. $t['cp'].','. $t['ville'].','. $t['tel_fixe'].','. $t['tel_port'].','. $t['mail'].')';
+    //$retour = $this->db->query($sqlRequest); 
+    var_dump($params);
+
+
 
 });
+
+
+
