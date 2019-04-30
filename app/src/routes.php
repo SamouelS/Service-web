@@ -54,24 +54,50 @@ $app->get('/connect', function (Request $request, Response $response, array $arg
 });
 
 $app->post('/personne/patient', function (Request $request, Response $response, array $args) {
+    $vretour=array('statut' => false);
     $params = $request->getParsedBody();
-    $t = array('nom'=>'null', 'prenom'=>'null', 'sexe'=>'null', 'date_naiss'=>'null', 'date_deces'=>'null', 'ad1'=>'null', 'ad2'=>'null', 'cp'=>'null', 'ville'=>'null', 'tel_fixe'=>'null', 'tel_port'=>'null', 'mail'=>'null');
+    $t = array(
+        'nom'=> array('type'=>'string','value'=>'null'), 
+        'prenom'=>array('type'=>'string','value'=>'null'), 
+        'sexe'=>array('type'=>'string','value'=>'null'), 
+        'date_naiss'=>array('type'=>'string','value'=>'null'), 
+        'date_deces'=>array('type'=>'string','value'=>'null'), 
+        'ad1'=>array('type'=>'string','value'=>'null'), 
+        'ad2'=>array('type'=>'string','value'=>'null'), 
+        'cp'=>array('type'=>'int','value'=>'null'), 
+        'ville'=>array('type'=>'string','value'=>'null'), 
+        'tel_fixe'=>array('type'=>'string','value'=>'null'), 
+        'tel_port'=>array('type'=>'string','value'=>'null'), 
+        'mail' => array('type'=>'string','value'=>'null')
+    );
     foreach($t as $key=>$value)
     {
         if(isset($params[$key]))
-        {
-            $t[$key]='"'.$params[$key].'"';
+        {           
+            if($t[$key]['type']=='string')
+            {
+                $t[$key]['value']='"'.$params[$key].'"';
+            }
+            else
+            {
+                $t[$key]['value']=$params[$key];
+            }
 
         }
     }
 
     $sqlRequest =   'INSERT INTO personne (nom, prenom, sexe, date_naiss, date_deces, ad1, ad2, cp, ville, tel_fixe, tel_port, mail)
-                    VALUES ('. $t['nom'].','. $t['prenom'].','. $t['sexe'].','. $t['date_naiss'].','. $t['date_deces'].','. $t['ad1'].','. $t['ad2'].','. $t['cp'].','. $t['ville'].','. $t['tel_fixe'].','. $t['tel_port'].','. $t['mail'].')';
-    //$retour = execRequete($sqlRequest,$this->db); 
-    $result = $this->db->query($sqlRequest);
+                    VALUES ('. $t['nom']['value'].','. $t['prenom']['value'].','. $t['sexe']['value'].','. $t['date_naiss']['value'].','. $t['date_deces']['value'].','. $t['ad1']['value'].','. $t['ad2']['value'].','. $t['cp']['value'].','. $t['ville']['value'].','. $t['tel_fixe']['value'].','. $t['tel_port']['value'].','. $t['mail']['value'].')';
 
-    return $result;
-    //var_dump($sqlRequest);
+    if($this->db->query($sqlRequest)){
+        $vretour['statut'] = 'success';
+    }
+    $vretour = json_encode($vretour);
+    return $vretour;
+    //if($result == '')
+    //return $result;
+    //echo $sqlRequest;
+    //var_dump($result);
 
 
 });
