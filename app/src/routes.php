@@ -102,15 +102,5 @@ $app->post('/personne/patient', function (Request $request, Response $response, 
 
 });
 
-function execRequete($uneRequete,$obj)
-{		
-    $result = $obj->query($uneRequete);
-    if($result){
-        return $result; 
-    }
-    else{
-        echo "\nPDO::errorInfo():\n";
-        print_r($obj->errorInfo());
-    }  
-}
+
 
