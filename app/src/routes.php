@@ -70,6 +70,7 @@ $app->post('/personne/patient', function (Request $request, Response $response, 
         'tel_port'=>array('type'=>'string','value'=>'null'), 
         'mail' => array('type'=>'string','value'=>'null')
     );
+    //VERIFIER LES PARAM OBLIGATOIRE !
     foreach($t as $key=>$value)
     {
         if(isset($params[$key]))
@@ -82,7 +83,6 @@ $app->post('/personne/patient', function (Request $request, Response $response, 
             {
                 $t[$key]['value']=$params[$key];
             }
-
         }
     }
 
