@@ -135,6 +135,110 @@ $app->post('/patient', function (Request $request, Response $response, array $ar
     
 });
 
+$app->post('/infirmiere', function (Request $request, Response $response, array $args) {
+    $vretour=array('statut' => false);
+    $params = $request->getParsedBody();
+    $t = array(
+        'id'=> array('type'=>'int','value'=>'null'), 
+        'fichier_photo' => array('type'=>'string','value'=>'null')  
+    );
+    foreach($t as $key=>$value)
+    {
+        if(isset($params[$key]))
+        {           
+            if($t[$key]['type']=='string')
+            {
+                $t[$key]['value']='"'.$params[$key].'"';
+            }
+            elseif($t[$key]['type'] == 'int')
+            {
+                $t[$key]['value']=$params[$key];
+            }
+        }
+    }
+    $sqlRequest =   'INSERT INTO infirmiere (id, fichier_photo)
+                    VALUES ('. $t['id']['value'].','. $t['fichier_photo']['value'].')';
+
+    if($this->db->query($sqlRequest)){
+        $vretour['statut'] = true;
+    }
+        
+    $vretour = json_encode($vretour);
+    return $vretour;
+    
+});
+
+$app->post('/administrateur', function (Request $request, Response $response, array $args) {
+    $vretour=array('statut' => false);
+    $params = $request->getParsedBody();
+    $t = array(
+        'id'=> array('type'=>'int','value'=>'null') 
+    );
+    foreach($t as $key=>$value)
+    {
+        if(isset($params[$key]))
+        {           
+            if($t[$key]['type']=='string')
+            {
+                $t[$key]['value']='"'.$params[$key].'"';
+            }
+            elseif($t[$key]['type'] == 'int')
+            {
+                $t[$key]['value']=$params[$key];
+            }
+        }
+    }
+    $sqlRequest =   'INSERT INTO administrateur (id)
+                    VALUES ('. $t['id']['value'].')';
+
+    if($this->db->query($sqlRequest)){
+        $vretour['statut'] = true;
+    }
+        
+    $vretour = json_encode($vretour);
+    return $vretour;
+    
+});
+
+$app->post('/badge', function (Request $request, Response $response, array $args) {
+    //$vretour=array('statut' => false);
+    $params = $request->getParsedBody();
+    $t = array(
+        'id'=> array('type'=>'int','value'=>'null'), 
+        'uid'=> array('type'=>'string','value'=>'null'), 
+        'actif'=> array('type'=>'int','value'=>'null')
+    );
+    foreach($t as $key=>$value)
+    {
+        if(isset($params[$key]))
+        {           
+            if($t[$key]['type']=='string')
+            {
+                $t[$key]['value']='"'.$params[$key].'"';
+            }
+            elseif($t[$key]['type'] == 'int')
+            {
+                $t[$key]['value']=$params[$key];
+            }
+        }
+    }
+    $sqlRequest =   'INSERT INTO badge (id,uid,actif)
+                    VALUES ('.$t['id']['value'].','.$t['uid']['value'].','.$t['actif']['value'].')';
+
+    /*if($this->db->query($sqlRequest)){
+        $vretour['statut'] = true;
+    }
+    else
+    {
+        $vretour['info'] = $this->db->errorInfo();
+    }*/
+
+    $vretour = ($this->execRequete)($sqlRequest,$this->db);
+    $vretour = json_encode($vretour);
+    return $vretour;
+    
+});
+
 //DELETE COLONNE VIA ID
 $app->delete('[/deletepersonne/{id:\d*}]', function (Request $request, Response $response, array $args) {
     $sqlRequest ='DELETE FROM personne WHERE id = '.$args['id'].';';
@@ -170,4 +274,5 @@ $app->put('[/personnes/{id:\d*}]', function (Request $request, Response $respons
         $vretour = false;
     return $vretour;
 });
+
 

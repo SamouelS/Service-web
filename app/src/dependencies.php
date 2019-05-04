@@ -26,3 +26,17 @@ $container['db'] = function ($c) {
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     return $pdo;
 };
+$container['execRequete'] = function($c) {
+    return function($uneRequete,$db){		
+        $result = $db->query($uneRequete);
+        if($result){
+            $vretour['statut'] = true;
+            $vretour['value'] = $result; 
+        }
+        else{
+            $vretour['statut'] = false;
+            $vretour['info'] = $db->errorInfo();
+        }
+        return $vretour;
+    };
+};
