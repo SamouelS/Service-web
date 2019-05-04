@@ -53,7 +53,8 @@ $app->get('/connect', function (Request $request, Response $response, array $arg
 
 });
 
-$app->post('/personne/patient', function (Request $request, Response $response, array $args) {
+$app->post('/personne', function (Request $request, Response $response, array $args) {
+    
     $vretour=array('statut' => false);
     $params = $request->getParsedBody();
     $t = array(
@@ -68,9 +69,10 @@ $app->post('/personne/patient', function (Request $request, Response $response, 
         'ville'=>array('type'=>'string','value'=>'null'), 
         'tel_fixe'=>array('type'=>'string','value'=>'null'), 
         'tel_port'=>array('type'=>'string','value'=>'null'), 
-        'mail' => array('type'=>'string','value'=>'null')
+        'mail' => array('type'=>'string','value'=>'null'),
+        
     );
-    //VERIFIER LES PARAM OBLIGATOIRE !
+
     foreach($t as $key=>$value)
     {
         if(isset($params[$key]))
@@ -79,7 +81,7 @@ $app->post('/personne/patient', function (Request $request, Response $response, 
             {
                 $t[$key]['value']='"'.$params[$key].'"';
             }
-            else
+            elseif($t[$key]['type'] == 'int')
             {
                 $t[$key]['value']=$params[$key];
             }
@@ -87,20 +89,18 @@ $app->post('/personne/patient', function (Request $request, Response $response, 
     }
 
     $sqlRequest =   'INSERT INTO personne (nom, prenom, sexe, date_naiss, date_deces, ad1, ad2, cp, ville, tel_fixe, tel_port, mail)
-                    VALUES ('. $t['nom']['value'].','. $t['prenom']['value'].','. $t['sexe']['value'].','. $t['date_naiss']['value'].','. $t['date_deces']['value'].','. $t['ad1']['value'].','. $t['ad2']['value'].','. $t['cp']['value'].','. $t['ville']['value'].','. $t['tel_fixe']['value'].','. $t['tel_port']['value'].','. $t['mail']['value'].')';
-
+                        VALUES ('. $t['nom']['value'].','. $t['prenom']['value'].','. $t['sexe']['value'].','. $t['date_naiss']['value'].','. $t['date_deces']['value'].','. $t['ad1']['value'].','. $t['ad2']['value'].','. $t['cp']['value'].','. $t['ville']['value'].','. $t['tel_fixe']['value'].','. $t['tel_port']['value'].','. $t['mail']['value'].')';
+    
     if($this->db->query($sqlRequest)){
-        $vretour['statut'] = 'success';
+        $vretour['statut'] = true;
     }
+        
     $vretour = json_encode($vretour);
     return $vretour;
-    //if($result == '')
-    //return $result;
-    //echo $sqlRequest;
-    //var_dump($result);
-
 
 });
-
+//'information_medicales' => array('type'=>'string','value'=>'null'),
+//'personne_de_confiance' => array('type'=>'int','value'=>'null'),
+//'infirmiere_souhait' => array('type'=>'int','value'=>'null')
 
 
