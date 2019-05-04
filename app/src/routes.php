@@ -218,6 +218,367 @@ $app->post('/badge', function (Request $request, Response $response, array $args
     
 });
 
+$app->post('/categorie_indisponibilite', function (Request $request, Response $response, array $args) {
+
+    $params = $request->getParsedBody();
+    $t = array(
+        'id'=> array('type'=>'int','value'=>'null'), 
+        'libelle'=> array('type'=>'string','value'=>'null')
+
+    );
+    foreach($t as $key=>$value)
+    {
+        if(isset($params[$key]))
+        {           
+            if($t[$key]['type']=='string')
+            {
+                $t[$key]['value']='"'.$params[$key].'"';
+            }
+            elseif($t[$key]['type'] == 'int')
+            {
+                $t[$key]['value']=$params[$key];
+            }
+        }
+    }
+    $sqlRequest =   'INSERT INTO categorie_indisponibilite (id,libelle)
+                    VALUES ('.$t['id']['value'].','.$t['libelle']['value'].')';
+
+    $vretour = ($this->execRequete)($sqlRequest,$this->db);
+    $vretour = json_encode($vretour);
+    return $vretour;
+    
+});
+
+$app->post('/categ_soins', function (Request $request, Response $response, array $args) {
+
+    $params = $request->getParsedBody();
+    $t = array(
+        'id'=> array('type'=>'int','value'=>'null'), 
+        'libelle'=> array('type'=>'string','value'=>'null'), 
+        'description'=> array('type'=>'string','value'=>'null')
+    );
+    foreach($t as $key=>$value)
+    {
+        if(isset($params[$key]))
+        {           
+            if($t[$key]['type']=='string')
+            {
+                $t[$key]['value']='"'.$params[$key].'"';
+            }
+            elseif($t[$key]['type'] == 'int')
+            {
+                $t[$key]['value']=$params[$key];
+            }
+        }
+    }
+    $sqlRequest =   'INSERT INTO categ_soins (id,libelle,description)
+                    VALUES ('.$t['id']['value'].','.$t['libelle']['value'].','.$t['description']['value'].')';
+
+    $vretour = ($this->execRequete)($sqlRequest,$this->db);
+    $vretour = json_encode($vretour);
+    return $vretour;
+    
+});
+
+$app->post('/chambre_forte', function (Request $request, Response $response, array $args) {
+
+    $params = $request->getParsedBody();
+    $t = array(
+        'badge'=> array('type'=>'int','value'=>'null'), 
+        'date'=> array('type'=>'string','value'=>'null'), 
+        'acces_ok'=> array('type'=>'string','value'=>'null')
+    );
+    foreach($t as $key=>$value)
+    {
+        if(isset($params[$key]))
+        {           
+            if($t[$key]['type']=='string')
+            {
+                $t[$key]['value']='"'.$params[$key].'"';
+            }
+            elseif($t[$key]['type'] == 'int')
+            {
+                $t[$key]['value']=$params[$key];
+            }
+        }
+    }
+    $sqlRequest =   'INSERT INTO chambre_forte (badge, date, acces_ok)
+                    VALUES ('.$t['badge']['value'].','.$t['date']['value'].','.$t['acces_ok']['value'].')';
+
+    $vretour = ($this->execRequete)($sqlRequest,$this->db);
+    $vretour = json_encode($vretour);
+    return $vretour;
+    
+});
+$app->post('/convalescence', function (Request $request, Response $response, array $args) {
+
+    $params = $request->getParsedBody();
+    $t = array(
+        'id_patient'=> array('type'=>'int','value'=>'null'), 
+        'id_lieux'=> array('type'=>'int','value'=>'null'), 
+        'date_deb'=> array('type'=>'string','value'=>'null'), 
+        'date_fin'=> array('type'=>'string','value'=>'null'), 
+        'chambre'=> array('type'=>'string','value'=>'null'), 
+        'tel_direct'=> array('type'=>'string','value'=>'null')
+    );
+    foreach($t as $key=>$value)
+    {
+        if(isset($params[$key]))
+        {           
+            if($t[$key]['type']=='string')
+            {
+                $t[$key]['value']='"'.$params[$key].'"';
+            }
+            elseif($t[$key]['type'] == 'int')
+            {
+                $t[$key]['value']=$params[$key];
+            }
+        }
+    }
+    $sqlRequest =   'INSERT INTO convalescence (id_patient, id_lieux, date_deb, date_fin, chambre, tel_direct)
+                    VALUES ('.$t['id_patient']['value'].','.$t['id_lieux']['value'].','.$t['date_deb']['value'].','.$t['date_fin']['value'].','.$t['chambre']['value'].','.$t['tel_direct']['value'].')';
+
+    $vretour = ($this->execRequete)($sqlRequest,$this->db);
+    $vretour = json_encode($vretour);
+    return $vretour;
+    
+});
+
+$app->post('/indisponibilite', function (Request $request, Response $response, array $args) {
+
+    $params = $request->getParsedBody();
+    $t = array(
+        'infirmiere'=> array('type'=>'int','value'=>'null'), 
+        'date_debut'=> array('type'=>'string','value'=>'null'), 
+        'date_fin'=> array('type'=>'string','value'=>'null'),
+        'heure_deb'=> array('type'=>'string','value'=>'null'),  
+        'heure_fin'=> array('type'=>'string','value'=>'null'), 
+        'categorie'=> array('type'=>'int','value'=>'null')
+
+    );
+    foreach($t as $key=>$value)
+    {
+        if(isset($params[$key]))
+        {           
+            if($t[$key]['type']=='string')
+            {
+                $t[$key]['value']='"'.$params[$key].'"';
+            }
+            elseif($t[$key]['type'] == 'int')
+            {
+                $t[$key]['value']=$params[$key];
+            }
+        }
+    }
+    $sqlRequest =   'INSERT INTO convalescence (infirmiere, date_debut, date_fin, heure_deb, heure_fin, categorie)
+                    VALUES ('.$t['infirmiere']['value'].','.$t['date_debut']['value'].','.$t['date_fin']['value'].','.$t['heure_deb']['value'].','.$t['heure_fin']['value'].','.$t['categorie']['value'].')';
+
+    $vretour = ($this->execRequete)($sqlRequest,$this->db);
+    $vretour = json_encode($vretour);
+    return $vretour;
+    
+});
+
+$app->post('/infirmiere_badge', function (Request $request, Response $response, array $args) {
+
+    $params = $request->getParsedBody();
+    $t = array(
+        'id_infirmiere'=> array('type'=>'int','value'=>'null'), 
+        'id_badge'=> array('type'=>'int','value'=>'null'), 
+        'date_deb'=> array('type'=>'string','value'=>'null'), 
+        'date_fin'=> array('type'=>'string','value'=>'null')
+    );
+    foreach($t as $key=>$value)
+    {
+        if(isset($params[$key]))
+        {           
+            if($t[$key]['type']=='string')
+            {
+                $t[$key]['value']='"'.$params[$key].'"';
+            }
+            elseif($t[$key]['type'] == 'int')
+            {
+                $t[$key]['value']=$params[$key];
+            }
+        }
+    }
+    $sqlRequest =   'INSERT INTO convalescence (id_infirmiere, id_badge, date_deb, date_fin)
+                    VALUES ('.$t['id_infirmiere']['value'].','.$t['id_badge']['value'].','.$t['date_deb']['value'].','.$t['date_fin']['value'].')';
+
+    $vretour = ($this->execRequete)($sqlRequest,$this->db);
+    $vretour = json_encode($vretour);
+    return $vretour;
+    
+});
+
+$app->post('/lieu_convalescence', function (Request $request, Response $response, array $args) {
+
+    $params = $request->getParsedBody();
+    $t = array(
+        'id'=> array('type'=>'int','value'=>'null'), 
+        'titre'=> array('type'=>'strin','value'=>'null'), 
+        'ad1'=> array('type'=>'string','value'=>'null'), 
+        'ad2'=> array('type'=>'string','value'=>'null'),
+        'ville'=> array('type'=>'string','value'=>'null'),
+        'tel_fixe'=> array('type'=>'string','value'=>'null'),
+        'contact'=> array('type'=>'int','value'=>'null')
+    );
+    foreach($t as $key=>$value)
+    {
+        if(isset($params[$key]))
+        {           
+            if($t[$key]['type']=='string')
+            {
+                $t[$key]['value']='"'.$params[$key].'"';
+            }
+            elseif($t[$key]['type'] == 'int')
+            {
+                $t[$key]['value']=$params[$key];
+            }
+        }
+    }
+    $sqlRequest =   'INSERT INTO lieu_convalescence (id, titre,ad1,ad2,ville,tel_fixe,contact)
+                    VALUES ('.$t['id']['value'].','.$t['titre']['value'].','.$t['ad1']['value'].','.$t['ad2']['value'].','.$t['ville']['value'].','.$t['tel_fixe']['value'].','.$t['contact']['value'].')';
+
+    $vretour = ($this->execRequete)($sqlRequest,$this->db);
+    $vretour = json_encode($vretour);
+    return $vretour;
+    
+});
+
+$app->post('/peronne_login', function (Request $request, Response $response, array $args) {
+
+    $params = $request->getParsedBody();
+    $t = array(
+        'id'=> array('type'=>'int','value'=>'null'), 
+        'login'=> array('type'=>'string','value'=>'null'), 
+        'mp'=> array('type'=>'string','value'=>'null'), 
+        'derniere_connexion'=> array('type'=>'string','value'=>'null'),
+        'nb_tentative_erreur'=> array('type'=>'int','value'=>'null')
+    );
+    foreach($t as $key=>$value)
+    {
+        if(isset($params[$key]))
+        {           
+            if($t[$key]['type']=='string')
+            {
+                $t[$key]['value']='"'.$params[$key].'"';
+            }
+            elseif($t[$key]['type'] == 'int')
+            {
+                $t[$key]['value']=$params[$key];
+            }
+        }
+    }
+    $sqlRequest =   'INSERT INTO personne_login (id,login,mp,derniere_connexion,nb_tentative_erreur)
+                    VALUES ('.$t['id']['value'].','.$t['login']['value'].','.$t['mp']['value'].','.$t['derniere_connexion']['value'].','.$t['nb_tentative_erreur']['value'].')';
+
+    $vretour = ($this->execRequete)($sqlRequest,$this->db);
+    $vretour = json_encode($vretour);
+    return $vretour;
+    
+});
+
+$app->post('/soins', function (Request $request, Response $response, array $args) {
+
+    $params = $request->getParsedBody();
+    $t = array(
+        'id'=> array('type'=>'int','value'=>'null'), 
+        'id_categ_soins'=> array('type'=>'int','value'=>'null'), 
+        'id_type_soins'=> array('type'=>'int','value'=>'null'), 
+        'libelle'=> array('type'=>'string','value'=>'null'), 
+        'description'=> array('type'=>'string','value'=>'null'), 
+        'coefficient'=> array('type'=>'int','value'=>'null'),
+        'date'=> array('type'=>'string','value'=>'null')
+    );
+    foreach($t as $key=>$value)
+    {
+        if(isset($params[$key]))
+        {           
+            if($t[$key]['type']=='string')
+            {
+                $t[$key]['value']='"'.$params[$key].'"';
+            }
+            elseif($t[$key]['type'] == 'int')
+            {
+                $t[$key]['value']=$params[$key];
+            }
+        }
+    }
+    $sqlRequest =   'INSERT INTO soins (id, id_categ_soins, id_type_soins, libelle, description, coefficient, date)
+                    VALUES ('.$t['id']['value'].','.$t['id_categ_soins']['value'].','.$t['id_type_soins']['value'].','.$t['libelle']['value'].','.$t['description']['value'].','.$t['coeficient']['value'].','.$t['date']['value'].')';
+
+    $vretour = ($this->execRequete)($sqlRequest,$this->db);
+    $vretour = json_encode($vretour);
+    return $vretour;
+    
+});
+$app->post('/soins_visite', function (Request $request, Response $response, array $args) {
+
+    $params = $request->getParsedBody();
+    $t = array(
+        'visite'=> array('type'=>'int','value'=>'null'), 
+        'id_categ_soins'=> array('type'=>'int','value'=>'null'), 
+        'id_type_soins'=> array('type'=>'int','value'=>'null'), 
+        'id_soins'=> array('type'=>'int','value'=>'null'), 
+        'prevu'=> array('type'=>'string','value'=>'null'), 
+        'realise'=> array('type'=>'int','value'=>'null')
+    );
+    foreach($t as $key=>$value)
+    {
+        if(isset($params[$key]))
+        {           
+            if($t[$key]['type']=='string')
+            {
+                $t[$key]['value']='"'.$params[$key].'"';
+            }
+            elseif($t[$key]['type'] == 'int')
+            {
+                $t[$key]['value']=$params[$key];
+            }
+        }
+    }
+    $sqlRequest =   'INSERT INTO soins_visite (visite,id_categ_soins,id_type_soins,id_soins,prevu,realise)
+                    VALUES ('.$t['visite']['value'].','.$t['id_categ_soins']['value'].','.$t['id_type_soins']['value'].','.$t['id_soins']['value'].','.$t['prevu']['value'].','.$t['realise']['value'].')';
+
+    $vretour = ($this->execRequete)($sqlRequest,$this->db);
+    $vretour = json_encode($vretour);
+    return $vretour;
+    
+});
+$app->post('/temoignage', function (Request $request, Response $response, array $args) {
+
+    $params = $request->getParsedBody();
+    $t = array(
+        'id'=> array('type'=>'int','value'=>'null'), 
+        'personne_login'=> array('type'=>'int','value'=>'null'), 
+        'contenu'=> array('type'=>'int','value'=>'null'), 
+        'date'=> array('type'=>'int','value'=>'null'), 
+        'valide'=> array('type'=>'string','value'=>'null')       
+    );
+    foreach($t as $key=>$value)
+    {
+        if(isset($params[$key]))
+        {           
+            if($t[$key]['type']=='string')
+            {
+                $t[$key]['value']='"'.$params[$key].'"';
+            }
+            elseif($t[$key]['type'] == 'int')
+            {
+                $t[$key]['value']=$params[$key];
+            }
+        }
+    }
+    $sqlRequest =   'INSERT INTO temoignage (id, personne_login, contenu, date,valide)
+                    VALUES ('.$t['id']['value'].','.$t['personne login']['value'].','.$t['contenu']['value'].','.$t['date']['value'].','.$t['valide']['value'].')';
+
+    $vretour = ($this->execRequete)($sqlRequest,$this->db);
+    $vretour = json_encode($vretour);
+    return $vretour;
+    
+});
+
 //DELETE COLONNE VIA ID
 $app->delete('[/deletepersonne/{id:\d*}]', function (Request $request, Response $response, array $args) {
     $sqlRequest ='DELETE FROM personne WHERE id = '.$args['id'].';';
