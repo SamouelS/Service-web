@@ -100,10 +100,40 @@ $app->post('/personne', function (Request $request, Response $response, array $a
 
 });
 
-$app->post('/personne', function (Request $request, Response $response, array $args) {
-//'information_medicales' => array('type'=>'string','value'=>'null'),
-//'personne_de_confiance' => array('type'=>'int','value'=>'null'),
-//'infirmiere_souhait' => array('type'=>'int','value'=>'null')
+$app->post('/patient', function (Request $request, Response $response, array $args) {
+    $vretour=array('statut' => false);
+    $params = $request->getParsedBody();
+    $t = array(
+        'id'=> array('type'=>'int','value'=>'null'), 
+        'information_medicales' => array('type'=>'string','value'=>'null'),
+        'personne_de_confiance' => array('type'=>'int','value'=>'null'),
+        'infirmiere_souhait' => array('type'=>'int','value'=>'null')     
+    );
+    foreach($t as $key=>$value)
+    {
+        if(isset($params[$key]))
+        {           
+            if($t[$key]['type']=='string')
+            {
+                $t[$key]['value']='"'.$params[$key].'"';
+            }
+            elseif($t[$key]['type'] == 'int')
+            {
+                $t[$key]['value']=$params[$key];
+            }
+        }
+    }
+    $sqlRequest =   'INSERT INTO patient (id, information_medicales, personne_de_confiance, infirmiere_souhait)
+                    VALUES ('. $t['id']['value'].','. $t['information_medicales']['value'].','. $t['personne_de_confiance']['value'].','. $t['infirmiere_souhait']['value'].')';
+
+    if($this->db->query($sqlRequest)){
+        $vretour['statut'] = true;
+    }
+        
+    $vretour = json_encode($vretour);
+    return $vretour;
+    
+});
 
 //DELETE COLONNE VIA ID
 $app->delete('[/deletepersonne/{id:\d*}]', function (Request $request, Response $response, array $args) {
