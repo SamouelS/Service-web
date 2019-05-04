@@ -55,7 +55,6 @@ $app->get('/connect', function (Request $request, Response $response, array $arg
 
 $app->post('/personne', function (Request $request, Response $response, array $args) {
 
-    $vretour=array('statut' => false);
     $params = $request->getParsedBody();
     $t = array(
         'nom'=> array('type'=>'string','value'=>'null'), 
@@ -91,17 +90,14 @@ $app->post('/personne', function (Request $request, Response $response, array $a
     $sqlRequest =   'INSERT INTO personne (nom, prenom, sexe, date_naiss, date_deces, ad1, ad2, cp, ville, tel_fixe, tel_port, mail)
                         VALUES ('. $t['nom']['value'].','. $t['prenom']['value'].','. $t['sexe']['value'].','. $t['date_naiss']['value'].','. $t['date_deces']['value'].','. $t['ad1']['value'].','. $t['ad2']['value'].','. $t['cp']['value'].','. $t['ville']['value'].','. $t['tel_fixe']['value'].','. $t['tel_port']['value'].','. $t['mail']['value'].')';
     
-    if($this->db->query($sqlRequest)){
-        $vretour['statut'] = true;
-    }
-        
+    $vretour = ($this->execRequete)($sqlRequest,$this->db);
     $vretour = json_encode($vretour);
     return $vretour;
 
 });
 
 $app->post('/patient', function (Request $request, Response $response, array $args) {
-    $vretour=array('statut' => false);
+
     $params = $request->getParsedBody();
     $t = array(
         'id'=> array('type'=>'int','value'=>'null'), 
@@ -126,17 +122,14 @@ $app->post('/patient', function (Request $request, Response $response, array $ar
     $sqlRequest =   'INSERT INTO patient (id, information_medicales, personne_de_confiance, infirmiere_souhait)
                     VALUES ('. $t['id']['value'].','. $t['information_medicales']['value'].','. $t['personne_de_confiance']['value'].','. $t['infirmiere_souhait']['value'].')';
 
-    if($this->db->query($sqlRequest)){
-        $vretour['statut'] = true;
-    }
-        
+    $vretour = ($this->execRequete)($sqlRequest,$this->db);
     $vretour = json_encode($vretour);
     return $vretour;
     
 });
 
 $app->post('/infirmiere', function (Request $request, Response $response, array $args) {
-    $vretour=array('statut' => false);
+
     $params = $request->getParsedBody();
     $t = array(
         'id'=> array('type'=>'int','value'=>'null'), 
@@ -159,17 +152,14 @@ $app->post('/infirmiere', function (Request $request, Response $response, array 
     $sqlRequest =   'INSERT INTO infirmiere (id, fichier_photo)
                     VALUES ('. $t['id']['value'].','. $t['fichier_photo']['value'].')';
 
-    if($this->db->query($sqlRequest)){
-        $vretour['statut'] = true;
-    }
-        
+    $vretour = ($this->execRequete)($sqlRequest,$this->db);
     $vretour = json_encode($vretour);
     return $vretour;
     
 });
 
 $app->post('/administrateur', function (Request $request, Response $response, array $args) {
-    $vretour=array('statut' => false);
+
     $params = $request->getParsedBody();
     $t = array(
         'id'=> array('type'=>'int','value'=>'null') 
@@ -191,17 +181,14 @@ $app->post('/administrateur', function (Request $request, Response $response, ar
     $sqlRequest =   'INSERT INTO administrateur (id)
                     VALUES ('. $t['id']['value'].')';
 
-    if($this->db->query($sqlRequest)){
-        $vretour['statut'] = true;
-    }
-        
+    $vretour = ($this->execRequete)($sqlRequest,$this->db);
     $vretour = json_encode($vretour);
     return $vretour;
     
 });
 
 $app->post('/badge', function (Request $request, Response $response, array $args) {
-    //$vretour=array('statut' => false);
+
     $params = $request->getParsedBody();
     $t = array(
         'id'=> array('type'=>'int','value'=>'null'), 
@@ -224,14 +211,6 @@ $app->post('/badge', function (Request $request, Response $response, array $args
     }
     $sqlRequest =   'INSERT INTO badge (id,uid,actif)
                     VALUES ('.$t['id']['value'].','.$t['uid']['value'].','.$t['actif']['value'].')';
-
-    /*if($this->db->query($sqlRequest)){
-        $vretour['statut'] = true;
-    }
-    else
-    {
-        $vretour['info'] = $this->db->errorInfo();
-    }*/
 
     $vretour = ($this->execRequete)($sqlRequest,$this->db);
     $vretour = json_encode($vretour);
