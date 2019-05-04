@@ -54,7 +54,7 @@ $app->get('/connect', function (Request $request, Response $response, array $arg
 });
 
 $app->post('/personne', function (Request $request, Response $response, array $args) {
-    
+
     $vretour=array('statut' => false);
     $params = $request->getParsedBody();
     $t = array(
@@ -99,8 +99,45 @@ $app->post('/personne', function (Request $request, Response $response, array $a
     return $vretour;
 
 });
+
+$app->post('/personne', function (Request $request, Response $response, array $args) {
 //'information_medicales' => array('type'=>'string','value'=>'null'),
 //'personne_de_confiance' => array('type'=>'int','value'=>'null'),
 //'infirmiere_souhait' => array('type'=>'int','value'=>'null')
 
+//DELETE COLONNE VIA ID
+$app->delete('[/deletepersonne/{id:\d*}]', function (Request $request, Response $response, array $args) {
+    $sqlRequest ='DELETE FROM personne WHERE id = '.$args['id'].';';
+    if($this->db->query($sqlRequest))
+        $vretour = true;
+    else
+        $vretour = false;
+    return $vretour;
+});
+
+
+//UPDATE A FAIRE -> VERIFICATION TYPE
+$app->put('[/personnes/{id:\d*}]', function (Request $request, Response $response, array $args) {
+    $sqlRequest = 'UPDATE personne SET';
+    $retour = $request->getParsedBody();
+    $i = count($retour);
+    foreach($retour as $paramerte=>$valeur) {
+        $i = $i - 1;
+        if(gettype($valeur) == "integer") {
+            $sqlRequest = $sqlRequest." ".$paramerte." = ".$valeur;
+        } else {
+            $sqlRequest = $sqlRequest." ".$paramerte." = '".$valeur."'";
+        }
+        if ($i != 0) {
+            $sqlRequest = $sqlRequest.',';
+        } else {
+            $sqlRequest = $sqlRequest.' WHERE id = '.$args['id'].';';
+        }
+    }
+    if($this->db->query($sqlRequest))
+        $vretour = true;
+    else
+        $vretour = false;
+    return $vretour;
+});
 
