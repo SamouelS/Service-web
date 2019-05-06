@@ -68,7 +68,7 @@ $app->post('/personne', function (Request $request, Response $response, array $a
         'ville'=>array('type'=>'string','value'=>'null'), 
         'tel_fixe'=>array('type'=>'string','value'=>'null'), 
         'tel_port'=>array('type'=>'string','value'=>'null'), 
-        'mail' => array('type'=>'string','value'=>'null'),
+        'mail' => array('type'=>'string','value'=>'null')
         
     );
 
