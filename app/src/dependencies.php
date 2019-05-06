@@ -35,7 +35,7 @@ $container['execRequete'] = function($c) {
         }
         else{
             $vretour['statut'] = false;
-            $vretour['info'] = $db->errorInfo();
+            $vretour['info'] = utf8_encode($db->errorInfo()[2]) ;
         }
         return $vretour;
     };
