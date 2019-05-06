@@ -101,7 +101,7 @@ $app->post('/patient', function (Request $request, Response $response, array $ar
     $params = $request->getParsedBody();
     $t = array(
         'id'=> array('type'=>'int','value'=>'null'), 
-        'information_medicales' => array('type'=>'string','value'=>'null'),
+        'informations_medicales' => array('type'=>'string','value'=>'null'),
         'personne_de_confiance' => array('type'=>'int','value'=>'null'),
         'infirmiere_souhait' => array('type'=>'int','value'=>'null')     
     );
@@ -119,11 +119,12 @@ $app->post('/patient', function (Request $request, Response $response, array $ar
             }
         }
     }
-    $sqlRequest =   'INSERT INTO patient (id, information_medicales, personne_de_confiance, infirmiere_souhait)
-                    VALUES ('. $t['id']['value'].','. $t['information_medicales']['value'].','. $t['personne_de_confiance']['value'].','. $t['infirmiere_souhait']['value'].')';
+    $sqlRequest =   'INSERT INTO patient (id, informations_medicales, personne_de_confiance, infirmiere_souhait)
+                    VALUES ('. $t['id']['value'].','. $t['informations_medicales']['value'].','. $t['personne_de_confiance']['value'].','. $t['infirmiere_souhait']['value'].')';
 
     $vretour = ($this->execRequete)($sqlRequest,$this->db);
     $vretour = json_encode($vretour);
+
     return $vretour;
     
 });
@@ -254,7 +255,7 @@ $app->post('/categ_soins', function (Request $request, Response $response, array
     $params = $request->getParsedBody();
     $t = array(
         'id'=> array('type'=>'int','value'=>'null'), 
-        'libelle'=> array('type'=>'string','value'=>'null'), 
+        'libel'=> array('type'=>'string','value'=>'null'), 
         'description'=> array('type'=>'string','value'=>'null')
     );
     foreach($t as $key=>$value)
@@ -271,8 +272,8 @@ $app->post('/categ_soins', function (Request $request, Response $response, array
             }
         }
     }
-    $sqlRequest =   'INSERT INTO categ_soins (id,libelle,description)
-                    VALUES ('.$t['id']['value'].','.$t['libelle']['value'].','.$t['description']['value'].')';
+    $sqlRequest =   'INSERT INTO categ_soins (id,libel,description)
+                    VALUES ('.$t['id']['value'].','.$t['libel']['value'].','.$t['description']['value'].')';
 
     $vretour = ($this->execRequete)($sqlRequest,$this->db);
     $vretour = json_encode($vretour);
@@ -652,9 +653,9 @@ $app->post('/visite', function (Request $request, Response $response, array $arg
         'infirmiere'=> array('type'=>'int','value'=>'null'), 
         'date_prevue'=> array('type'=>'string','value'=>'null'),
         'date_reelle'=> array('type'=>'string','value'=>'null'),
-        'duree'=> array('type'=>'int','value'=>'null')   
+        'duree'=> array('type'=>'int','value'=>'null'),   
         'compte_rendu_infirmiere'=> array('type'=>'string','value'=>'null'),
-        'compte_rendu_patient'=> array('type'=>'string','value'=>'null'),
+        'compte_rendu_patient'=> array('type'=>'string','value'=>'null')
     );
     foreach($t as $key=>$value)
     {
