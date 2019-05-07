@@ -688,6 +688,7 @@ $app->delete('[/deletepersonne/{id:\d*}]', function (Request $request, Response 
         $vretour = true;
     else
         $vretour = false;
+    echo $sqlRequest;
     return $vretour;
 });
 
