@@ -90,12 +90,13 @@ $app->post('/personne', function (Request $request, Response $response, array $a
     $sqlRequest =   'INSERT INTO personne (nom, prenom, sexe, date_naiss, date_deces, ad1, ad2, cp, ville, tel_fixe, tel_port, mail)
                         VALUES ('. $t['nom']['value'].','. $t['prenom']['value'].','. $t['sexe']['value'].','. $t['date_naiss']['value'].','. $t['date_deces']['value'].','. $t['ad1']['value'].','. $t['ad2']['value'].','. $t['cp']['value'].','. $t['ville']['value'].','. $t['tel_fixe']['value'].','. $t['tel_port']['value'].','. $t['mail']['value'].')';
     
-    $vretour = ($this->execRequete)($sqlRequest,$this->db);
+    $execRequete = $this->execRequete;
+    $vretour = $execRequete($sqlRequest,$this->db);
     $vretour = json_encode($vretour);
     return $vretour;
 
 });
-
+/*
 $app->post('/patient', function (Request $request, Response $response, array $args) {
 
     $params = $request->getParsedBody();
@@ -679,6 +680,7 @@ $app->post('/visite', function (Request $request, Response $response, array $arg
     return $vretour;
     
 });
+*/
 //DELETE COLONNE VIA ID
 $app->delete('[/deletepersonne/{id:\d*}]', function (Request $request, Response $response, array $args) {
     $sqlRequest ='DELETE FROM personne WHERE id = '.$args['id'].';';
