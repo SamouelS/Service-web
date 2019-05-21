@@ -96,7 +96,6 @@ $app->post('/personne', function (Request $request, Response $response, array $a
     return $vretour;
 
 });
-/*
 $app->post('/patient', function (Request $request, Response $response, array $args) {
 
     $params = $request->getParsedBody();
@@ -123,7 +122,8 @@ $app->post('/patient', function (Request $request, Response $response, array $ar
     $sqlRequest =   'INSERT INTO patient (id, informations_medicales, personne_de_confiance, infirmiere_souhait)
                     VALUES ('. $t['id']['value'].','. $t['informations_medicales']['value'].','. $t['personne_de_confiance']['value'].','. $t['infirmiere_souhait']['value'].')';
 
-    $vretour = ($this->execRequete)($sqlRequest,$this->db);
+    $execRequete = $this->execRequete;
+    $vretour = $execRequete($sqlRequest,$this->db);
     $vretour = json_encode($vretour);
 
     return $vretour;
@@ -154,7 +154,8 @@ $app->post('/infirmiere', function (Request $request, Response $response, array 
     $sqlRequest =   'INSERT INTO infirmiere (id, fichier_photo)
                     VALUES ('. $t['id']['value'].','. $t['fichier_photo']['value'].')';
 
-    $vretour = ($this->execRequete)($sqlRequest,$this->db);
+    $execRequete = $this->execRequete;
+    $vretour = $execRequete($sqlRequest,$this->db);
     $vretour = json_encode($vretour);
     return $vretour;
     
@@ -183,7 +184,8 @@ $app->post('/administrateur', function (Request $request, Response $response, ar
     $sqlRequest =   'INSERT INTO administrateur (id)
                     VALUES ('. $t['id']['value'].')';
 
-    $vretour = ($this->execRequete)($sqlRequest,$this->db);
+    $execRequete = $this->execRequete;
+    $vretour = $execRequete($sqlRequest,$this->db);
     $vretour = json_encode($vretour);
     return $vretour;
     
@@ -214,8 +216,10 @@ $app->post('/badge', function (Request $request, Response $response, array $args
     $sqlRequest =   'INSERT INTO badge (id,uid,actif)
                     VALUES ('.$t['id']['value'].','.$t['uid']['value'].','.$t['actif']['value'].')';
 
-    $vretour = ($this->execRequete)($sqlRequest,$this->db);
+    $execRequete = $this->execRequete;
+    $vretour = $execRequete($sqlRequest,$this->db);
     $vretour = json_encode($vretour);
+
     return $vretour;
     
 });
@@ -245,7 +249,8 @@ $app->post('/categorie_indisponibilite', function (Request $request, Response $r
     $sqlRequest =   'INSERT INTO categorie_indisponibilite (id,libelle)
                     VALUES ('.$t['id']['value'].','.$t['libelle']['value'].')';
 
-    $vretour = ($this->execRequete)($sqlRequest,$this->db);
+    $execRequete = $this->execRequete;
+    $vretour = $execRequete($sqlRequest,$this->db);
     $vretour = json_encode($vretour);
     return $vretour;
     
@@ -276,7 +281,8 @@ $app->post('/categ_soins', function (Request $request, Response $response, array
     $sqlRequest =   'INSERT INTO categ_soins (id,libel,description)
                     VALUES ('.$t['id']['value'].','.$t['libel']['value'].','.$t['description']['value'].')';
 
-    $vretour = ($this->execRequete)($sqlRequest,$this->db);
+    $execRequete = $this->execRequete;
+    $vretour = $execRequete($sqlRequest,$this->db);
     $vretour = json_encode($vretour);
     return $vretour;
     
@@ -307,7 +313,8 @@ $app->post('/chambre_forte', function (Request $request, Response $response, arr
     $sqlRequest =   'INSERT INTO chambre_forte (badge, date, acces_ok)
                     VALUES ('.$t['badge']['value'].','.$t['date']['value'].','.$t['acces_ok']['value'].')';
 
-    $vretour = ($this->execRequete)($sqlRequest,$this->db);
+    $execRequete = $this->execRequete;
+    $vretour = $execRequete($sqlRequest,$this->db);
     $vretour = json_encode($vretour);
     return $vretour;
     
@@ -340,7 +347,8 @@ $app->post('/convalescence', function (Request $request, Response $response, arr
     $sqlRequest =   'INSERT INTO convalescence (id_patient, id_lieux, date_deb, date_fin, chambre, tel_direct)
                     VALUES ('.$t['id_patient']['value'].','.$t['id_lieux']['value'].','.$t['date_deb']['value'].','.$t['date_fin']['value'].','.$t['chambre']['value'].','.$t['tel_direct']['value'].')';
 
-    $vretour = ($this->execRequete)($sqlRequest,$this->db);
+    $execRequete = $this->execRequete;
+    $vretour = $execRequete($sqlRequest,$this->db);
     $vretour = json_encode($vretour);
     return $vretour;
     
@@ -375,7 +383,8 @@ $app->post('/indisponibilite', function (Request $request, Response $response, a
     $sqlRequest =   'INSERT INTO convalescence (infirmiere, date_debut, date_fin, heure_deb, heure_fin, categorie)
                     VALUES ('.$t['infirmiere']['value'].','.$t['date_debut']['value'].','.$t['date_fin']['value'].','.$t['heure_deb']['value'].','.$t['heure_fin']['value'].','.$t['categorie']['value'].')';
 
-    $vretour = ($this->execRequete)($sqlRequest,$this->db);
+    $execRequete = $this->execRequete;
+    $vretour = $execRequete($sqlRequest,$this->db);
     $vretour = json_encode($vretour);
     return $vretour;
     
@@ -407,7 +416,8 @@ $app->post('/infirmiere_badge', function (Request $request, Response $response, 
     $sqlRequest =   'INSERT INTO convalescence (id_infirmiere, id_badge, date_deb, date_fin)
                     VALUES ('.$t['id_infirmiere']['value'].','.$t['id_badge']['value'].','.$t['date_deb']['value'].','.$t['date_fin']['value'].')';
 
-    $vretour = ($this->execRequete)($sqlRequest,$this->db);
+    $execRequete = $this->execRequete;
+    $vretour = $execRequete($sqlRequest,$this->db);
     $vretour = json_encode($vretour);
     return $vretour;
     
@@ -442,7 +452,8 @@ $app->post('/lieu_convalescence', function (Request $request, Response $response
     $sqlRequest =   'INSERT INTO lieu_convalescence (id, titre,ad1,ad2,ville,tel_fixe,contact)
                     VALUES ('.$t['id']['value'].','.$t['titre']['value'].','.$t['ad1']['value'].','.$t['ad2']['value'].','.$t['ville']['value'].','.$t['tel_fixe']['value'].','.$t['contact']['value'].')';
 
-    $vretour = ($this->execRequete)($sqlRequest,$this->db);
+    $execRequete = $this->execRequete;
+    $vretour = $execRequete($sqlRequest,$this->db);
     $vretour = json_encode($vretour);
     return $vretour;
     
@@ -475,7 +486,8 @@ $app->post('/peronne_login', function (Request $request, Response $response, arr
     $sqlRequest =   'INSERT INTO personne_login (id,login,mp,derniere_connexion,nb_tentative_erreur)
                     VALUES ('.$t['id']['value'].','.$t['login']['value'].','.$t['mp']['value'].','.$t['derniere_connexion']['value'].','.$t['nb_tentative_erreur']['value'].')';
 
-    $vretour = ($this->execRequete)($sqlRequest,$this->db);
+    $execRequete = $this->execRequete;
+    $vretour = $execRequete($sqlRequest,$this->db);
     $vretour = json_encode($vretour);
     return $vretour;
     
@@ -510,7 +522,8 @@ $app->post('/soins', function (Request $request, Response $response, array $args
     $sqlRequest =   'INSERT INTO soins (id, id_categ_soins, id_type_soins, libelle, description, coefficient, date)
                     VALUES ('.$t['id']['value'].','.$t['id_categ_soins']['value'].','.$t['id_type_soins']['value'].','.$t['libelle']['value'].','.$t['description']['value'].','.$t['coeficient']['value'].','.$t['date']['value'].')';
 
-    $vretour = ($this->execRequete)($sqlRequest,$this->db);
+    $execRequete = $this->execRequete;
+    $vretour = $execRequete($sqlRequest,$this->db);
     $vretour = json_encode($vretour);
     return $vretour;
     
@@ -543,7 +556,8 @@ $app->post('/soins_visite', function (Request $request, Response $response, arra
     $sqlRequest =   'INSERT INTO soins_visite (visite,id_categ_soins,id_type_soins,id_soins,prevu,realise)
                     VALUES ('.$t['visite']['value'].','.$t['id_categ_soins']['value'].','.$t['id_type_soins']['value'].','.$t['id_soins']['value'].','.$t['prevu']['value'].','.$t['realise']['value'].')';
 
-    $vretour = ($this->execRequete)($sqlRequest,$this->db);
+    $execRequete = $this->execRequete;
+    $vretour = $execRequete($sqlRequest,$this->db);
     $vretour = json_encode($vretour);
     return $vretour;
     
@@ -575,7 +589,8 @@ $app->post('/temoignage', function (Request $request, Response $response, array 
     $sqlRequest =   'INSERT INTO temoignage (id, personne_login, contenu, date,valide)
                     VALUES ('.$t['id']['value'].','.$t['personne login']['value'].','.$t['contenu']['value'].','.$t['date']['value'].','.$t['valide']['value'].')';
 
-    $vretour = ($this->execRequete)($sqlRequest,$this->db);
+    $execRequete = $this->execRequete;
+    $vretour = $execRequete($sqlRequest,$this->db);
     $vretour = json_encode($vretour);
     return $vretour;
     
@@ -607,7 +622,8 @@ $app->post('/token', function (Request $request, Response $response, array $args
     $sqlRequest =   'INSERT INTO token (id, id_login,date,jeton)
                     VALUES ('.$t['id']['value'].','.$t['id_login']['value'].','.$t['date']['value'].','.$t['jeton']['value'].')';
 
-    $vretour = ($this->execRequete)($sqlRequest,$this->db);
+    $execRequete = $this->execRequete;
+    $vretour = $execRequete($sqlRequest,$this->db);
     $vretour = json_encode($vretour);
     return $vretour;
     
@@ -639,7 +655,8 @@ $app->post('/type_soins', function (Request $request, Response $response, array 
     $sqlRequest =   'INSERT INTO type_soins (id_categ_soins,id_type_soins,libel,description)
                     VALUES ('.$t['id_categ_soins']['value'].','.$t['id_type_soins']['value'].','.$t['libel']['value'].','.$t['description']['value'].')';
 
-    $vretour = ($this->execRequete)($sqlRequest,$this->db);
+    $execRequete = $this->execRequete;
+    $vretour = $execRequete($sqlRequest,$this->db);
     $vretour = json_encode($vretour);
     return $vretour;
     
@@ -675,12 +692,13 @@ $app->post('/visite', function (Request $request, Response $response, array $arg
     $sqlRequest =   'INSERT INTO visite (id, patient, infirmiere, date_prevue, date_reelle, duree, compte_rendu_infirmiere, compte_rendu_patient)
                     VALUES ('.$t['id']['value'].','.$t['patient']['value'].','.$t['date_prevu']['value'].','.$t['date_reelle']['value'].','.$t['duree']['value'].','.$t['compte_rendu_infirmiere']['value'].','.$t['compte_rendu_patient']['value'].')';
 
-    $vretour = ($this->execRequete)($sqlRequest,$this->db);
+    $execRequete = $this->execRequete;
+    $vretour = $execRequete($sqlRequest,$this->db);
     $vretour = json_encode($vretour);
     return $vretour;
     
 });
-*/
+
 //DELETE COLONNE VIA ID
 $app->delete('[/deletepersonne/{id:\d*}]', function (Request $request, Response $response, array $args) {
     $sqlRequest ='DELETE FROM personne WHERE id = '.$args['id'].';';

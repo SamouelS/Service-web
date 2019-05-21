@@ -24,6 +24,7 @@ $container['db'] = function ($c) {
         $settings['user'], $settings['pass']);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT);
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $pdo->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND , 'SET NAMES utf8');
     return $pdo;
 };
 $container['execRequete'] = function($c) {
