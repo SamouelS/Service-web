@@ -19,7 +19,7 @@ $settings = require __DIR__ . '/../src/settings.php';
 $app = new \Slim\App($settings);
 header('Access-Control-Allow-Origin: *');
 
-header('Access-Control-Allow-Methods: GET, POST, OPTIONS, DELETE');
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS, DELETE, PUT');
 
 header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 // Set up dependencies
